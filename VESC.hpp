@@ -9,6 +9,7 @@
 
 #include <cstdint>
 
+#include "./types/datatypes.h"
 #include "VESCMaster.hpp"
 
 /**
@@ -43,6 +44,13 @@ namespace VESCLib {
          * <realRpm> = <rpm>/<motorPolePairs>
          */
         void setRPM(int32_t rpm);
+
+        /**
+         * @brief Get performance information from the vesc.
+         * 
+         * @param [out] perfInfo Ptr to the performance information
+         */
+        void getPerfInfo(mc_values *perfInfo);
 
 
     private:

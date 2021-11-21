@@ -7,7 +7,6 @@
 #include <logging/log.h>
 #include "VESC.hpp"
 
-#include "types/datatypes.hpp"
 #include "util/buffer.hpp"
 
 LOG_MODULE_REGISTER(vesc_lib, LOG_LEVEL_INF);
@@ -28,6 +27,11 @@ namespace VESCLib {
 
         vescMaster->sendCommand(msg);
 
+    }
+
+    void getPerfInfo(mc_values *perfInfo) {
+
+        return;
     }
 
 }
