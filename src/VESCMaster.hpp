@@ -42,7 +42,6 @@ namespace VESCLib {
          */
         void sendCommand(const Message &msg) const;
 
-
     private:
 
         /**

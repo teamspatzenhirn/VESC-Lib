@@ -13,8 +13,8 @@
 
 namespace VESCLib {
 
-    Message::Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize, uint8_t vescMasterCanId)
-            : commandID(commandID), canID(canID), payload(payload), payloadSize(payloadSize), _vescMasterCanId(vescMasterCanId) {
+    Message::Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize, uint8_t vescMasterCanId = 0)
+            : commandID(commandID), canID(canID), payload(payload), payloadSize(payloadSize), vescMasterCanId(vescMasterCanId) {
     }
 
     uint32_t Message::getTotalSize() const {
@@ -58,10 +58,7 @@ namespace VESCLib {
     }
 
     bool Message::isCANMsg() const {
-        if (canID == VESC_MASTER_CAN_ID) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return !(canID == vescMasterCanId);
     }
 }

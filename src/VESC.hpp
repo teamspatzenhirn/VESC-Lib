@@ -46,11 +46,11 @@ namespace VESCLib {
         void setRPM(int32_t rpm);
 
         /**
-         * @brief Get performance information from the vesc.
+         * @brief Get telemetry data from the vesc.
          * 
-         * @param [out] perfInfo Ptr to the performance information
+         * @param [out] perfInfo Ptr to the telemetry data
          */
-        void getPerfInfo(mc_values *perfInfo);
+        void getTelemetryData(mc_values *telemetryData);
 
 
     private:

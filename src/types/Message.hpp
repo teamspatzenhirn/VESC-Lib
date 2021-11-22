@@ -32,8 +32,9 @@ namespace VESCLib {
              * @param canID The can id of the destination vesc.
              * @param payload The payload of the message.
              * @param payloadSize The size of the message payload.
+             * @param vescMasterCanId The CAN ID of the vesc vesc.
              */
-            Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize);
+            Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize, uint8_t vescMasterCanId = 0);
 
             /**
              * @brief Variable for the command id.
@@ -54,6 +55,11 @@ namespace VESCLib {
              * @brief Variable for the size of the msg payload.
              */
             uint16_t payloadSize;
+
+            /**
+             * @brief The CAN ID of the vesc master.
+             */
+            uint8_t svescMasterCanId;
 
             /**
              * @brief Checks if the msg is a msg which gets forwarded over the can bus.
@@ -78,13 +84,6 @@ namespace VESCLib {
              * @return the amount of bytes written to the buffer.
              */
             uint32_t writeMsgToBuffer(uint8_t *msgBuffer, uint32_t bufferSize, uint32_t startIndex = 0) const;
-
-        private:
-
-            /**
-             * @brief The CAN ID of the vesc master.
-             */
-            const uint8_t _vescMasterCanId;
 
     };
 

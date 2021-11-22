@@ -29,9 +29,14 @@ namespace VESCLib {
 
     }
 
-    void getPerfInfo(mc_values *perfInfo) {
+    void getTelemetryData(mc_values *telemetryData) {
 
-        return;
+        int32_t index = 0;
+
+        Message msg(COMM_GET_VALUES, canID, nullptr, 0);
+        Message->sendCommand(msg);
+
+        // ToDo: read data
     }
 
 }
