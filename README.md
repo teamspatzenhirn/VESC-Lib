@@ -1,2 +1,3 @@
-# VESC-Zephyr-Lib
-VESC Zephyr Library
+# VESC-Lib
+
+VESC Library

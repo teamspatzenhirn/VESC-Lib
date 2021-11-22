@@ -13,8 +13,8 @@
 
 namespace VESCLib {
 
-    Message::Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize)
-            : commandID(commandID), canID(canID), payload(payload), payloadSize(payloadSize) {
+    Message::Message(uint8_t commandID, uint8_t canID, uint8_t *payload, uint16_t payloadSize, uint8_t vescMasterCanId)
+            : commandID(commandID), canID(canID), payload(payload), payloadSize(payloadSize), _vescMasterCanId(vescMasterCanId) {
     }
 
     uint32_t Message::getTotalSize() const {
