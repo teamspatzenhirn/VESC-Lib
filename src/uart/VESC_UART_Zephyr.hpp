@@ -8,21 +8,61 @@
 #ifndef VESC_UART_Zephyr_hpp
 #define VESC_UART_Zephyr_hpp
 
+// std libraries
 #include <inttypes.h>
 
-namespace VESC_LIB {
+// zephyr libraries
+#include <logging/log.h>
+#include <devicetree.h>
+#include <drivers/uart.h>
 
-    namespace UART {
+/**
+ *
+ */
+namespace VESC_ComBackend {
 
-        void init();
+    /**
+     *
+     */
+    class VESC_UART_Zephyr {
 
-        void isr(const device *dev, void * /* user_data */);
+        public:
 
-        bool writeData(cosnt device *dev, const uint8_t *data, std::size_t size)
+            /**
+             *
+             * @param uartDevSpec
+             */
+            void VESC_UART_Zephyr(const struct uart_dt_spec *uartDevSpec);
 
-        bool readData(uint8_t * data);
+            /**
+             *
+             */
+            void init();
 
-        extern const struct uart_dt_spec *_uartDevSpec;
+            /**
+             *
+             * @param data
+             * @param size
+             * @param timeout
+             * @return
+             */
+            bool writeData(const uint8_t *data, std::size_t size, uint32_t timeout);
+
+            /**
+             *
+             * @param data
+             * @param size
+             * @param timeout
+             * @return
+             */
+            bool readData(uint8_t *data, std::size_t size, uint32_t timeout);
+
+        private:
+
+            /**
+             *
+             */
+            const struct uart_dt_spec *_uartDevSpec;
     }
 }
 
