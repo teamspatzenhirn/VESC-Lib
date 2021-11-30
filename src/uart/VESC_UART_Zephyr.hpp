@@ -46,7 +46,7 @@ namespace VESC_ComBackend {
              * @param timeout
              * @return
              */
-            bool writeData(const uint8_t *data, std::size_t size, uint32_t timeout);
+            int writeData(const uint8_t *data, std::size_t size, uint32_t timeout);
 
             /**
              *
@@ -55,7 +55,7 @@ namespace VESC_ComBackend {
              * @param timeout
              * @return
              */
-            bool readData(uint8_t *data, std::size_t size, uint32_t timeout);
+            int readData(uint8_t *data, std::size_t size, uint32_t timeout);
 
         private:
 

@@ -5,7 +5,10 @@
  * Description here TODO
  */
 
-#include "VESC_UART_Zephyr.hpp"
+#include "VESC_UART_Zephyr.hpp"+
+
+// zephyr libraries
+#include <errno.h>
 
 LOG_MODULE_REGISTER(vesc_lib_uart, LOG_LEVEL_DBG);
 
@@ -31,11 +34,63 @@ namespace VESC_ComBackend {
         LOG_INF("VESC UART is ready!");
     }
 
-    bool VESC_UART_Zephyr::writeData(const uint8_t *data, std::size_t size, uint32_t timeout) {
+    int VESC_UART_Zephyr::writeData(const uint8_t *data, std::size_t size, uint32_t timeout) {
 
+        int64_t timeoutTime = k_uptime_get() + K_MSEC(timeout);
+        std::size_t writtenCounter = 0;
+        const struct device *dev = nullptr; // @ToDo!
+
+        while (true) {
+
+            if (k_uptime_get() > timeoutTime) {
+                return -ETIME;
+            }
+
+            if (writtenCounter >= size) {
+                break;
+            }
+
+            uart_poll_in(dev, data[writtenCounter++])
+        }
+
+        return writtenCounter;
     }
 
-    bool VESC_UART_Zephyr::readData(uint8_t *data, std::size_t size, uint32_t timeout) {
+    int VESC_UART_Zephyr::readData(uint8_t *data, std::size_t size, uint32_t timeout) {
 
+        int64_t timeoutTime = k_uptime_get() + K_MSEC(timeout);
+        std::size_t readCounter = 0;
+        const struct device *dev = nullptr; // @ToDo!
+
+        while (true) {
+
+            if (k_uptime_get() > timeoutTime) {
+                return -ETIME;
+            }
+
+            uint8_t readByte = 0;
+
+            // uart_poll_in return value
+            // 0        If data arrived.
+            // -1       If no data was available to read (i.e., the UART input buffer was empty).
+            // -ENOTSUP	If API is not enabled.
+            // -ENOSYS	If the operation is not supported.
+            // -EBUSY	If reception was enabled using uart_rx_enabled
+            int v = uart_poll_in(dev, &readByte)
+            if ( v == 0) {
+                data[readCounter++] = readByte;
+                if (readCounter >= size) {
+                    break;
+                }
+            }
+            else if (v == -1) {
+                break;
+            }
+            else {
+                return v;
+            }
+        }
+
+        return readCounter;
     }
 }
